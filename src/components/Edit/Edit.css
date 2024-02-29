@@ -1,10 +1,35 @@
 .edit-contsiner{
-    background-color: rgb(15, 45, 216);
+    background-color: rgb(93, 153, 221);
     width: 350px;
     margin: auto;
-    margin-top: 40px;
     text-align: center;
     color: rgb(37, 7, 7);
-    font-size: 18px;
+    font-size: 12px;
+    padding-top: 1px;
+    border-radius: 6px;
+    font-family: sans-serif;
+}
 
+/* .edit-contsiner h1{
+   
+} */
+
+.edit-contsiner input{
+    height: 30px;
+    margin-bottom: 10px;
+    width: 230px;
+    border: none;
+    border-radius: 4px;
+}
+
+.span-item{
+    display: inline-block;
+    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+    margin-left: 10px;
+    width: 60px;
+    text-align: center;
+    line-height: 31px;
+    border-radius: 4px;
 }

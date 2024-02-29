@@ -8,7 +8,7 @@ export default function Todo() {
     <>
     <Header />
     {/* <List /> */}
-    <Edit />
+    {/* <Edit /> */}
     </>
   )
 }

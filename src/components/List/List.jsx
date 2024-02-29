@@ -1,7 +1,9 @@
 import React from 'react'
 import './List.css'
 
-export default function List({items}) {
+export default function List({items, deleteItem, editInput}) {
+
+
   
   console.log(items);
   return (
@@ -11,8 +13,8 @@ export default function List({items}) {
                   <li key={index} className='li-container'>
                     <input className='checkbox' type="checkbox" />
                     {data}
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    <i className="fa-solid fa-trash-can"></i>
+                    <i onClick={()=>editInput(index)} className="fa-solid fa-pen-to-square"></i>
+                    <i onClick={()=>deleteItem(index)} className="fa-solid fa-trash-can"></i>
                   </li>
 
           ))}
