@@ -19,7 +19,8 @@ ul li{
     background-color: rgb(37, 150, 220);
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     color: rgb(0, 3, 6);
     font-weight: 500;
     font-size: smaller;

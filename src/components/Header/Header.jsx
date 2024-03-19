@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import List from '../List/List'
 import Edit from '../Edit/Edit'
 import "./Header.css"
 
 
+const getItem = () =>{
+    const  item = localStorage.getItem("todo")
+    if (item) {
+      return  JSON.parse(localStorage.getItem("todo"));
+    }else{
+      return []
+    }
+}
+
 export default function Header() {
 
   const [input, setInput] = useState("")
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(getItem())
   const [editing, setEditing] = useState("")
   const [indexx, setIndexx] = useState(0)
+
+  useEffect(() => {
+        let data = localStorage.setItem('todo',JSON.stringify(items))
+  },[items]);
 
   // Function to handle form submission
   const handleChange  = (e) => {
@@ -18,50 +31,54 @@ export default function Header() {
 
   const storeItems = (e)=>{
     e.preventDefault();
-    setItems([...items, input]);
+    setItems([...items, {input, showEdit: false, completed: false}]);
     setInput('');
   }
 
   const deleteItem  = (id) =>{
-    // let r=window.confirm("Are you sure to remove this item?")
-    // if(r){
       setItems(items.filter((item,index)=> index !== id))
-      // alert('Deleted')
-    // }else{
-      // return false;
-    // }
   }
 
   const handleUpdateText = (id, text)=>{
-    const result = items.filter((value, index)=>index == id)
-    // setItems([...result])
-    setEditing(result);
+    const newItems = [...items]
+    const result = newItems.forEach((value, index)=>{
+      index == id
+      if(index == id){
+        value.showEdit = true
+      }
+    })
+    setItems(newItems)
+
+    const filterResult = items.filter((value, index)=>index == id)
+    console.log(filterResult,"_____filterResult");
+    const  [input]=filterResult;
+    const inputValue = input.input
+    console.log(inputValue,"__________inputValue");
+    setEditing(inputValue);
     setIndexx(id)
-    // const updatedList = items.map((e)=>{
-      // if(e.id === id){
-      //   e.text = text
-      // }
-      // return e
-    // })
-    // setItems(updatedList)
-    // console.log(updatedList);
-    // alert("hi")
+  }
+
+  const complete = (id)=>{
+    const newItems = [...items]
+    const result = newItems.forEach((value, index)=>{
+      index == id
+      if(index == id){
+        value.completed?  value.completed = false:  value.completed = true
+      }
+    })
+    setItems(newItems)
+    setIndexx(id)
   }
 
   const editSumit = ()=>{
-    console.log(editing);
-    if(editing[0].text !==""){
       const result = [...items]
-      result[indexx] = editing
+      result[indexx].input = editing
+      result[indexx].showEdit=false
       setItems(result)
-      setEditing("")
-   }
   }
 
   const handleChangeValue = (e)=>{
-    if (editing[0].text !=="") {
       setEditing(e.target.value)
-    }
   }
 
   return (
@@ -73,11 +90,10 @@ export default function Header() {
             <form className='input-group' onSubmit={storeItems}>
                 <h1>Write To Do</h1>
                 <input type="text" value={input} onChange={handleChange} placeholder="Enter Task Here" />
-                {/* <a>Add Todo</a> */}
             </form>
         </div>
-        <List  items={items}  deleteItem={deleteItem} editInput={handleUpdateText} />
-        <Edit  editing={editing} editSumit={editSumit} handleChangeValue={handleChangeValue} />
+        <List  items={items}  deleteItem={deleteItem} editInput={handleUpdateText} editing={editing} editSumit={editSumit} handleChangeValue={handleChangeValue} complete={complete}/>
+        
 
     </div>
   )
