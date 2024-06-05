@@ -31,8 +31,10 @@ export default function Header() {
 
   const storeItems = (e)=>{
     e.preventDefault();
-    setItems([...items, {input, showEdit: false, completed: false}]);
-    setInput('');
+    if (input) {
+      setItems([...items, {input, showEdit: false, completed: false}]);
+      setInput('');
+    }
   }
 
   const deleteItem  = (id) =>{
